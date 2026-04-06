@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shaik Wasim Akram — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0f0a;
+    --card: #1a1f16;
+    --accent: #a8e063;
+    --accent2: #5ecf8e;
+    --text: #e8ede2;
+    --muted: #7a8572;
+    --border: rgba(168,224,99,0.15);
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(12,15,10,0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--accent); letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 4rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -20%; right: -10%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,224,99,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+  .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  .hero h1 { font-family: var(--font-head); font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--text); max-width: 16ch; margin-bottom: 0.3em; }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 50ch; margin-bottom: 3rem; font-weight: 300; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 3px; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; border: none; }
+  .btn-primary { background: var(--accent); color: #0c0f0a; }
+  .btn-primary:hover { background: #c3f07a; }
+  .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border); }
+  .stat-num { font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; display: block; }
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* SECTIONS */
+  section { padding: 7rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
+  .section-title { font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 3rem; }
+
+  /* UNIVERSAL CARD — used by ALL sections */
+  .ucard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .ucard:hover { border-color: rgba(168,224,99,0.4); transform: translateY(-3px); }
+  .ucard::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+  }
+  .ucard:hover::after { transform: scaleX(1); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-text p { color: var(--muted); margin-bottom: 1.2rem; font-size: 1rem; line-height: 1.8; font-weight: 300; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .info-list { display: flex; flex-direction: column; }
+  .info-item { display: flex; justify-content: space-between; align-items: baseline; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .info-item:last-child { border-bottom: none; }
+  .info-key { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .info-val { font-size: 0.95rem; color: var(--text); font-weight: 400; text-align: right; }
+
+  /* EDUCATION */
+  .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .edu-card { padding: 2.5rem; }
+  .edu-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.75rem; }
+  .edu-badge { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: rgba(168,224,99,0.1); padding: 0.3rem 0.75rem; border-radius: 2px; }
+  .edu-score { font-family: var(--font-head); font-size: 2.4rem; font-weight: 800; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+  .edu-card h3 { font-family: var(--font-head); font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; line-height: 1.3; }
+  .edu-spec { font-size: 0.8rem; color: var(--accent2); font-weight: 500; margin-bottom: 0.5rem; letter-spacing: 0.03em; }
+  .edu-place { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.5; margin-bottom: 1.75rem; }
+  .edu-bar { height: 3px; background: rgba(168,224,99,0.1); border-radius: 2px; overflow: hidden; }
+  .edu-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .skill-card { padding: 2.5rem; }
+  .skill-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+  .skill-cat { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: rgba(168,224,99,0.1); padding: 0.3rem 0.75rem; border-radius: 2px; }
+  .skill-num { font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; color: rgba(168,224,99,0.07); line-height: 1; letter-spacing: -0.04em; }
+  .skill-card h4 { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
+  .skill-desc { font-size: 0.88rem; color: var(--muted); font-weight: 300; margin-bottom: 1.25rem; line-height: 1.7; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { font-size: 0.78rem; padding: 0.3rem 0.75rem; background: rgba(168,224,99,0.07); color: var(--accent2); border: 1px solid rgba(168,224,99,0.15); border-radius: 2px; letter-spacing: 0.03em; transition: background 0.2s, color 0.2s; cursor: default; }
+  .tag:hover { background: rgba(168,224,99,0.15); color: var(--accent); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .project-card { padding: 2.5rem; }
+  .proj-num { font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; color: rgba(168,224,99,0.07); position: absolute; top: 1rem; right: 1.5rem; line-height: 1; }
+  .proj-stack { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .stack-tag { font-size: 0.7rem; font-weight: 500; padding: 0.2rem 0.6rem; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .project-card h3 { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+  .project-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .project-card ul li { font-size: 0.9rem; color: var(--muted); padding-left: 1rem; position: relative; font-weight: 300; }
+  .project-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; top: 0.05em; }
+
+  /* EXPERIENCE */
+  .exp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .exp-card { padding: 2rem; }
+  .exp-type { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+  .exp-card h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+  .exp-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .exp-card ul li { font-size: 0.88rem; color: var(--muted); padding-left: 1rem; position: relative; font-weight: 300; }
+  .exp-card ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-size: 1.2rem; top: -0.1em; }
+
+  /* CONTACT */
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .contact-left p { color: var(--muted); margin-bottom: 2rem; font-weight: 300; font-size: 1.05rem; line-height: 1.8; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); padding: 1rem 1.25rem; border: 1px solid var(--border); transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(168,224,99,0.04); }
+  .contact-link .link-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.1rem; }
+  .contact-link .link-val { font-size: 0.95rem; font-weight: 400; }
+  .contact-link:hover .link-label { color: var(--accent2); }
+  .contact-right { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; }
+  .contact-right h4 { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text); }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 0.95rem; padding: 0.75rem 1rem; outline: none; border-radius: 2px; transition: border-color 0.2s; resize: none; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+  footer p { font-size: 0.8rem; color: var(--muted); }
+  .footer-name { font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; color: var(--accent); }
+  .full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero h1, .hero-sub, .hero-tag, .hero-actions { animation: fadeUp 0.8s ease both; }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.25s; }
+  .hero-sub { animation-delay: 0.4s; }
+  .hero-actions { animation-delay: 0.55s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .edu-grid, .skills-grid, .exp-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section { padding: 5rem 1.5rem 3rem; }
+    .hero { min-height: auto; padding-top: 7rem; }
+    .about-grid, .contact-wrap, .projects-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">W.A</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="max-width:none;">
+  <span class="hero-tag">Available for opportunities</span>
+  <h1>Shaik<br/><span>Wasim</span><br/>Akram</h1>
+  <p class="hero-sub">Aspiring Software Engineer · B.Tech CSE Data Science @ VIT Vellore · Building data-driven, impactful software.</p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+  <div class="hero-stats">
+    <div><span class="stat-num">9.1</span><span class="stat-label">CGPA</span></div>
+    <div><span class="stat-num">2+</span><span class="stat-label">Projects</span></div>
+    <div><span class="stat-num">VIT</span><span class="stat-label">Vellore</span></div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Introduction</div>
+  <h2 class="section-title">About Me</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Computer Science & Engineering (Data Science)</strong> student at VIT Vellore with a 9.1 CGPA, passionate about exploring modern tools and applying computational skills to solve real-world problems.</p>
+      <p>My focus lies at the intersection of <strong>software engineering, data-driven solutions, and IoT</strong>. I believe in continuous learning and building things that create genuine impact for users.</p>
+      <p>Outside of academics, I'm involved in the <strong>TLA Club at VIT</strong>, have participated in robotics hackathons, and enjoy following cricket, discovering music, and exploring new ideas with an open, curious mindset.</p>
+    </div>
+    <div class="info-list">
+      <div class="info-item"><span class="info-key">Location</span><span class="info-val">Vellore, Tamil Nadu, India</span></div>
+      <div class="info-item"><span class="info-key">Native</span><span class="info-val">Bapatla, AP, India</span></div>
+      <div class="info-item"><span class="info-key">Email</span><span class="info-val">wasim718akram@gmail.com</span></div>
+      <div class="info-item"><span class="info-key">Phone</span><span class="info-val">+91 93927 95090</span></div>
+      <div class="info-item"><span class="info-key">Languages</span><span class="info-val">Urdu · English · Telugu · Hindi</span></div>
+      <div class="info-item"><span class="info-key">Interests</span><span class="info-val">Music · Cricket · Movies · Tech</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Academic Background</div>
+  <h2 class="section-title">Education</h2>
+  <div class="edu-grid">
+
+    <div class="ucard edu-card">
+      <div class="edu-top">
+        <span class="edu-badge">B.Tech</span>
+        <span class="edu-score">9.1</span>
+      </div>
+      <h3>Computer Science & Engineering</h3>
+      <p class="edu-spec">Data Science Specialization</p>
+      <p class="edu-place">Vellore Institute of Technology (VIT), Vellore, TN</p>
+      <div class="edu-bar"><div class="edu-bar-fill" style="width:91%"></div></div>
+    </div>
+
+    <div class="ucard edu-card">
+      <div class="edu-top">
+        <span class="edu-badge">Pre-University</span>
+        <span class="edu-score">9.5</span>
+      </div>
+      <h3>Pre-University Course</h3>
+      <p class="edu-spec">Science & Mathematics</p>
+      <p class="edu-place">Rajiv Gandhi University of Knowledge Technologies, Nuzvid, AP</p>
+      <div class="edu-bar"><div class="edu-bar-fill" style="width:95%"></div></div>
+    </div>
+
+    <div class="ucard edu-card">
+      <div class="edu-top">
+        <span class="edu-badge">SSC</span>
+        <span class="edu-score">98.5%</span>
+      </div>
+      <h3>Secondary School Certificate</h3>
+      <p class="edu-spec">All Subjects</p>
+      <p class="edu-place">Sri Chaitanya School, Bapatla, AP</p>
+      <div class="edu-bar"><div class="edu-bar-fill" style="width:98.5%"></div></div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Proficiencies</div>
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+
+    <div class="ucard skill-card">
+      <div class="skill-top">
+        <span class="skill-cat">Languages</span>
+        <span class="skill-num">01</span>
+      </div>
+      <h4>Programming Languages</h4>
+      <p class="skill-desc">Core languages for software development, scripting, web, and systems programming.</p>
+      <div class="skill-tags">
+        <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">C</span>
+        <span class="tag">C++</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Linux</span>
+      </div>
+    </div>
+
+    <div class="ucard skill-card">
+      <div class="skill-top">
+        <span class="skill-cat">Hardware</span>
+        <span class="skill-num">02</span>
+      </div>
+      <h4>Hardware & IoT</h4>
+      <p class="skill-desc">Hands-on experience designing and building embedded and IoT systems from the ground up.</p>
+      <div class="skill-tags">
+        <span class="tag">Arduino</span><span class="tag">Circuit Design</span>
+        <span class="tag">Embedded Systems</span><span class="tag">Prototyping</span>
+      </div>
+    </div>
+
+    <div class="ucard skill-card">
+      <div class="skill-top">
+        <span class="skill-cat">Tools</span>
+        <span class="skill-num">03</span>
+      </div>
+      <h4>Developer Tools</h4>
+      <p class="skill-desc">Tooling for version control, development environments, and computational workflows.</p>
+      <div class="skill-tags">
+        <span class="tag">GitHub</span><span class="tag">VS Code</span>
+        <span class="tag">Arduino IDE</span><span class="tag">MATLAB</span>
+      </div>
+    </div>
+
+    <div class="ucard skill-card">
+      <div class="skill-top">
+        <span class="skill-cat">People</span>
+        <span class="skill-num">04</span>
+      </div>
+      <h4>Soft Skills</h4>
+      <p class="skill-desc">Communication and leadership abilities honed through teamwork, clubs, and hackathons.</p>
+      <div class="skill-tags">
+        <span class="tag">Technical Writing</span><span class="tag">Leadership</span>
+        <span class="tag">Teamwork</span><span class="tag">Communication</span><span class="tag">Problem-Solving</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Selected Work</div>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+
+    <div class="ucard project-card">
+      <div class="proj-num">01</div>
+      <div class="proj-stack">
+        <span class="stack-tag">Python</span><span class="stack-tag">SQL</span>
+      </div>
+      <h3>Digital Banking System</h3>
+      <ul>
+        <li>Secure banking app managing customer accounts and transactions</li>
+        <li>Features: account creation, balance inquiry, deposit, withdrawal & history</li>
+        <li>Relational database for efficient storage and retrieval</li>
+        <li>Data accuracy ensured via structured queries and validation</li>
+      </ul>
+    </div>
+
+    <div class="ucard project-card">
+      <div class="proj-num">02</div>
+      <div class="proj-stack">
+        <span class="stack-tag">C</span><span class="stack-tag">CSS</span>
+      </div>
+      <h3>Student Management System</h3>
+      <ul>
+        <li>Backend logic in C with CSS-styled interface</li>
+        <li>Student record management: add, update, delete operations</li>
+        <li>File management techniques for persistent data storage in C</li>
+        <li>CSS styling for improved interface readability and layout</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Activities & Involvement</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-grid">
+
+    <div class="ucard exp-card">
+      <div class="exp-type">Hackathon</div>
+      <h3>Robovitics Hackathon</h3>
+      <ul>
+        <li>Collaborated to design and build innovative solutions under time pressure</li>
+        <li>Contributed to ideation, problem-solving, and implementation</li>
+        <li>Gained hands-on rapid prototyping and teamwork skills</li>
+      </ul>
+    </div>
+
+    <div class="ucard exp-card">
+      <div class="exp-type">Academic</div>
+      <h3>Academic Engagement</h3>
+      <ul>
+        <li>Exploring Operating Systems and Computation Structures</li>
+        <li>Strengthening core problem-solving and system-level understanding</li>
+        <li>Committed to continuous self-learning beyond coursework</li>
+      </ul>
+    </div>
+
+    <div class="ucard exp-card">
+      <div class="exp-type">Community</div>
+      <h3>Community Involvement</h3>
+      <ul>
+        <li>Participated in VIT Vellore campus marathon events</li>
+        <li>Management member of the TLA Club at VIT Vellore</li>
+        <li>Contributing to student community and campus initiatives</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Let's Connect</div>
+  <h2 class="section-title">Get in Touch</h2>
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <p>I'm open to collaborating on innovative technology projects and engaging in meaningful discussions on emerging trends in software engineering. Let's build something great together.</p>
+      <div class="contact-links">
+        <a href="mailto:wasim718akram@gmail.com" target="_blank" class="contact-link">
+          <div><span class="link-label">Email</span><span class="link-val">wasim718akram@gmail.com</span></div>
+        </a>
+        <a href="https://www.linkedin.com/in/wasim-akram-shaik-2b1a2929b" target="_blank" class="contact-link">
+          <div><span class="link-label">LinkedIn</span><span class="link-val">wasim-akram-shaik</span></div>
+        </a>
+        <a href="https://github.com/wasimakram-shaik" target="_blank" class="contact-link">
+          <div><span class="link-label">GitHub</span><span class="link-val">wasimakram-shaik</span></div>
+        </a>
+        <a href="tel:+919392795090" class="contact-link">
+          <div><span class="link-label">Phone</span><span class="link-val">+91 93927 95090</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <h4>Send a Message</h4>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="John Doe" /></div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@example.com" /></div>
+      <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Hello Wasim, I'd love to collaborate on..."></textarea></div>
+      <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="alert('Thanks! Please email directly at wasim718akram@gmail.com')">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<footer>
+  <p>Designed & built with care · 2025</p>
+  <span class="footer-name">Shaik Wasim Akram</span>
+  <p>Vellore, Tamil Nadu, India</p>
+</footer>
+
+</body>
+</html>
